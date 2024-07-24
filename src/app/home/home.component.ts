@@ -33,13 +33,16 @@ export class HomeComponent {
 
   })
 
-  loadingService=inject(LoadingService)
 
   advanceCourses=computed(()=>{
     const courses= this.#courses();
     return courses.filter((course)=>course.category==="ADVANCED")
 
   })
+
+    messageService=inject(MessagesService);
+
+
 
   constructor() {
     effect(() => {
@@ -61,7 +64,11 @@ export class HomeComponent {
       this.#courses.set(courses.sort(sortCoursesBySeqNo));
     }
     catch (err){
-      alert('Error loading courses!')
+      this.messageService.showMessage(
+        'Error loading courses.',
+        "error"
+      )
+
       console.error(err)
 
     }

@@ -12,6 +12,11 @@ import {NgClass} from "@angular/common";
   standalone: true
 })
 export class MessagesComponent {
+messageService=inject(MessagesService);
 
+message=this.messageService.message //consumed signal in html
 
+  onClose() {
+    this.messageService.clear();
+  }
 }
