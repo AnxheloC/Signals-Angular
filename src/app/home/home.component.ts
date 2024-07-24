@@ -9,6 +9,7 @@ import {catchError, from, throwError} from "rxjs";
 import {toObservable, toSignal, outputToObservable, outputFromObservable} from "@angular/core/rxjs-interop";
 import {CoursesServiceWithFetch} from "../services/courses-fetch.service";
 import {openEditCourseDialog} from "../edit-course-dialog/edit-course-dialog.component";
+import {LoadingService} from "../loading/loading.service";
 
 @Component({
   selector: 'home',
@@ -31,6 +32,8 @@ export class HomeComponent {
     return courses.filter((course)=>course.category==="BEGINNER")
 
   })
+
+  loadingService=inject(LoadingService)
 
   advanceCourses=computed(()=>{
     const courses= this.#courses();

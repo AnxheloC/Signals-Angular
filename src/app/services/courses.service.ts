@@ -1,9 +1,10 @@
 import {inject, Injectable} from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpContext} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {firstValueFrom, lastValueFrom} from "rxjs";
 import {Course} from "../models/course.model";
 import {GetCoursesResponse} from "../models/get-courses.response";
+import {SkipLoading} from "../loading/skip-loading.component";
 
 
 @Injectable({
@@ -14,7 +15,15 @@ export class CoursesService {
   http=inject(HttpClient);
 
   async loadAllCourses():Promise<Course[]>{
-    const courses$=this.http.get<GetCoursesResponse>(`${environment.apiRoot}/courses`);
+
+    const courses$=this.http.get<GetCoursesResponse>(`${environment.apiRoot}/courses
+    `
+      //pjesa me poshte kalon nje http context dhe i thot qe te bej skip loadind ne context
+      // ,
+      // {
+      //   context:new HttpContext().set(SkipLoading,true)
+      // }
+      );
     const response =await firstValueFrom(courses$);// convert obs to promise dhe e kthen ne promise vleren e pare
     // lastValueFrom(courses$);te fundit port http jan njesoj
     return response.courses;
