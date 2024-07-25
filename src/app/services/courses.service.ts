@@ -45,5 +45,10 @@ export class CoursesService {
      return await firstValueFrom(delete$)
   }
 
+  async getCourseById(courseId:string):Promise<Course>{
+    const course$=this.http.get<Course>(`${environment.apiRoot}/courses/${courseId}`)
+    return firstValueFrom(course$)
+  }
+
 
 }
