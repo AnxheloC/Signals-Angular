@@ -14,7 +14,30 @@ import {MessagesService} from "../../messages/messages.service";
   styleUrl: './lesson-detail.component.scss'
 })
 export class LessonDetailComponent {
+lesson=input.required<Lesson|null>();
+lessonUpdated=output<Lesson>();
+cancel=output();
+lessonsService=inject(LessonsService);
+messageService=inject(MessagesService);
 
 
+  onCancel() {
+    this.cancel.emit();
+  }
+
+  async onSave(description:string) {
+
+    try {
+  const lesson =this.lesson();
+     const updatedLesson =await this.lessonsService.saveLesson(lesson!.id, {description})
+      this.lessonUpdated.emit(updatedLesson);
+    }
+
+    catch (e) {
+      console.error(e)
+      this.messageService.showMessage('Error while saving the lesson','error')
+    }
+
+  }
 
 }

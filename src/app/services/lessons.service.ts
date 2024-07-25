@@ -34,6 +34,11 @@ export class LessonsService {
     return response.lessons
   }
 
+  async saveLesson(lessonId:string,lesson:Partial<Lesson>):Promise<Lesson>{
+    const newLesson$=this.http.put<Lesson>(`${environment.apiRoot}/lessons/${lessonId}`,lesson)
+    return firstValueFrom(newLesson$)
+  }
+
 
 
 }
